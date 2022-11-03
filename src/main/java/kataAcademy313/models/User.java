@@ -81,7 +81,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder(8).encode(password);
+        this.password = password;
     }
 
     public int getAge() {

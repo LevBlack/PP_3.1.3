@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users list</title>
+</head>
+<header>
+  <div th:insert="header :: copy"></div>
+  <h2> Admin page</h2>
+</header>
+<body>
+<h1>Admin page</h1>
+<div th:each="user : ${users}">
+  <a th:href="@{/admin/update-user/{id} (id=${user.id})}" th:text="${user.getUsername()}">user</a>
+</div>
+<div>
+  <input type="button" value="Add new user"
+         onclick="window.location.href = 'admin/reg-user/'"/>
+</div>
+</body>
+</html>
