@@ -2,8 +2,10 @@ package kataAcademy313.services;
 
 import kataAcademy313.models.User;
 import kataAcademy313.repositories.UserRepositories;
+import kataAcademy313.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,12 +16,10 @@ import java.util.Optional;
 public class UserServiceImp implements UserService{
 
     private final UserRepositories userRepositories;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepositories userRepositories, PasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepositories userRepositories) {
         this.userRepositories = userRepositories;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,9 +30,6 @@ public class UserServiceImp implements UserService{
     @Override
     @Transactional
     public void addUser(User user) {
-        String encoderPass = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encoderPass);
-
         userRepositories.save(user);
     }
 
@@ -59,5 +56,13 @@ public class UserServiceImp implements UserService{
         userToUpdate.setRoles(user.getRoles());
 
         userRepositories.save(userToUpdate);
+    }
+    @Override
+    public User getUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepositories.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user.get();
     }
 }

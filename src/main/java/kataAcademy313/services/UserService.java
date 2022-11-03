@@ -1,6 +1,7 @@
 package kataAcademy313.services;
 
 import kataAcademy313.models.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface UserService {
         void removeUser(int id);
 
         void update(int id, User user);
+        User getUserByUsername(String username);
     }
