@@ -1,16 +1,13 @@
 package kataAcademy313.models;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "person")
-public class User {
+public class User{
 
     @Id
     @Column(name = "id")
@@ -59,7 +56,6 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
     public int getId() {
         return id;
     }

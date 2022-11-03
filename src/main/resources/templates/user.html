@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hello User!</title>
+    <title>User info</title>
 </head>
-
+<header>
+    <div th:insert="header :: copy"></div>
+</header>
 <body>
-<!--<div th:insert="header :: copy"></div>-->
-<!--<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>-->
 
-<p th:text="${user.getId()}">VALUE</p>
-<p th:text="${user.getUsername()}">VALUE</p>
-<p th:text="${user.getPassword()}">VALUE</p>
-<a th:href="@{/}">Go to the main page</a>
-<a th:href="@{/logout}">Logout here</a>
+<table border="1">User table
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">FirstName</th>
+        <th scope="col">LastName</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+    </tr>
+    </thead>
 
+    <tbody>
+    <tr>
+        <td th:text="${user.getId()}"/>
+        <td th:text="${user.getFirstName()}"/>
+        <td th:text="${user.getLastName()}"/>
+        <td th:text="${user.getEmail()}"/>
+        <td th:text="${user.getRoles()}"/>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<br/>
+<hr/>
 </body>
 </html>

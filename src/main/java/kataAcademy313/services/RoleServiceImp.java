@@ -1,13 +1,12 @@
 package kataAcademy313.services;
 
 import kataAcademy313.models.Role;
-import kataAcademy313.models.User;
 import kataAcademy313.repositories.RoleRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,12 +21,13 @@ public class RoleServiceImp implements RoleService{
     }
 
     @Override
+    @Transactional
     public Set<Role> getSetRole() {
         return new HashSet<>(roleRepositories.findAll());
     }
     @Override
     @Transactional
-    public void addRole(Role role) {
+    public void addRole(Role role){
         roleRepositories.save(role);
     }
 }

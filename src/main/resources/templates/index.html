@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <title>Spring Security App</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
+<header>
+  <div th:insert="header :: copy"></div>
+</header>
 <body>
-<h1>Welcome to the Starting Page!</h1>
-<a th:href="@{/login}">Login here</a>
+<h3>You don't have a role</h3>
 </body>
 </html>
