@@ -1,12 +1,16 @@
 package kataAcademy313.models;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "person")
-public class User{
+public class User {
 
     @Id
     @Column(name = "id")
@@ -39,6 +43,15 @@ public class User{
         this.roles = roles;
     }
 
+    public User(int id, String username, String password, int age, String email, Set<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.age = age;
+        this.email = email;
+        this.roles = roles;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -46,6 +59,7 @@ public class User{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
     public int getId() {
         return id;
     }
@@ -67,7 +81,7 @@ public class User{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder(8).encode(password);
     }
 
     public int getAge() {
@@ -97,4 +111,18 @@ public class User{
                 ", Роль =" + roles +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getEmail(), user.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername(), getEmail());
+    }
+
 }

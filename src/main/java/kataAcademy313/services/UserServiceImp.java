@@ -3,6 +3,7 @@ package kataAcademy313.services;
 import kataAcademy313.models.User;
 import kataAcademy313.repositories.UserRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,14 +14,15 @@ import java.util.Optional;
 public class UserServiceImp implements UserService{
 
     private final UserRepositories userRepositories;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepositories userRepositories) {
+    public UserServiceImp(UserRepositories userRepositories, PasswordEncoder passwordEncoder) {
         this.userRepositories = userRepositories;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    @Transactional
     public List<User> getAllUsers() {
         return userRepositories.findAll();
     }
@@ -28,11 +30,13 @@ public class UserServiceImp implements UserService{
     @Override
     @Transactional
     public void addUser(User user) {
+        String encoderPass = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encoderPass);
+
         userRepositories.save(user);
     }
 
     @Override
-    @Transactional
     public User getUser(int id) {
         Optional<User> user = userRepositories.findById(id);
         return user.orElse(null);
@@ -45,7 +49,6 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    @Transactional
     public void update(int id, User user) {
         User userToUpdate = userRepositories.findById(id).orElseThrow( () -> new RuntimeException("User not found!"));
 
@@ -57,5 +60,4 @@ public class UserServiceImp implements UserService{
 
         userRepositories.save(userToUpdate);
     }
-
 }
