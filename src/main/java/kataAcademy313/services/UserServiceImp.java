@@ -46,6 +46,7 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
+    @Transactional
     public void update(int id, User user) {
         User userToUpdate = userRepositories.findById(id).orElseThrow( () -> new RuntimeException("User not found!"));
 

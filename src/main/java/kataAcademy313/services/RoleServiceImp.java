@@ -21,7 +21,6 @@ public class RoleServiceImp implements RoleService{
     }
 
     @Override
-    @Transactional
     public Set<Role> getSetRole() {
         return new HashSet<>(roleRepositories.findAll());
     }
