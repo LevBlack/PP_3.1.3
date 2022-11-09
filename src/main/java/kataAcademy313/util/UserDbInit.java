@@ -13,14 +13,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class UserDBInit {
+public class UserDbInit {
 
     private final UserService userService;
 
     private final RoleService roleService;
 
     @Autowired
-    public UserDBInit(UserService userService, RoleService roleService) {
+    public UserDbInit(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }

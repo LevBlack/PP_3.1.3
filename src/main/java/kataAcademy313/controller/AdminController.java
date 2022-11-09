@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,48 +28,44 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String allUsers(Model model) {
+    public String allUsers(Model model, Principal principal) {
+
+        User authUser = userService.getUserByUsername(principal.getName());
+        model.addAttribute("authUser", authUser);
 
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
 
+        User newUser = new User();
+        model.addAttribute("newUser", newUser);
+
+        Set<Role> roleSet = new HashSet<>(roleService.getSetRole());
+        model.addAttribute("setRoles", roleSet);
+
         return "main";
     }
 
-    @GetMapping("/reg-user")
-    public String addUser(Model model) {
-
-        User user = new User();
-        model.addAttribute("newUser", user);
-        Set<Role> roleSet =  roleService.getSetRole();
-        model.addAttribute("setRoles", roleSet );
-
-        return "reg-user";
-    }
-
-    @GetMapping("/update-user/{id}")
-    public String editUser(@PathVariable("id") int id, Model model) {
-
-        User user = userService.getUser(id);
-        model.addAttribute("editUser", user);
-        Set<Role> roleSet =  roleService.getSetRole();
-        model.addAttribute("setRoles", roleSet );
-        System.out.println(user.getRoles());
-
-        return "update-user";
-    }
-
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("editUser") User user,@PathVariable("id") int id) {
+    public String updateUser(@ModelAttribute("user") User user,@PathVariable("id") int id, int[] rolesID) {
 
+        Set<Role> RoleList = new HashSet<>(rolesID.length);
+        for (int i : rolesID) {
+            RoleList.add(roleService.findById(i));
+        }
+        user.setRoles(RoleList);
         userService.update(id, user);
 
         return "redirect:/admin";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("newUser") User user) {
+    public String create(@ModelAttribute("newUser") User user, int[] rolesID) {
 
+        Set<Role> RoleList = new HashSet<>(rolesID.length);
+        for (int i : rolesID) {
+            RoleList.add(roleService.findById(i));
+        }
+        user.setRoles(RoleList);
         userService.addUser(user);
 
         return "redirect:/admin";

@@ -2,11 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User info</title>
+    <title>user</title>
 </head>
-<header>
-    <div th:insert="header :: copy"></div>
-</header>
 <body>
 
 <table border="1">User table
@@ -14,7 +11,7 @@
     <tr>
         <th scope="col">ID</th>
         <th scope="col">Username</th>
-        <th scope="col">Age</th>
+        <th scope="col">Password</th>
         <th scope="col">Email</th>
         <th scope="col">Role</th>
     </tr>
@@ -24,7 +21,7 @@
     <tr>
         <td th:text="${user.getId()}"/>
         <td th:text="${user.getUsername()}"/>
-        <td th:text="${user.getAge()}"/>
+        <td th:text="${user.getPassword()}"/>
         <td th:text="${user.getEmail()}"/>
         <td th:text="${user.getRoles()}"/>
     </tr>
@@ -33,5 +30,8 @@
 <br/>
 <br/>
 <hr/>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign out"/>
+</form>
 </body>
 </html>
