@@ -30,7 +30,7 @@ public class UserDbInit {
 
         Role role1 = new Role(1, "ROLE_ADMIN");
         Role role2 = new Role(2, "ROLE_USER");
-        Role role3 = new Role(3, "");
+        Role role3 = new Role(3, null);
 
         roleService.addRole(role1);
         roleService.addRole(role2);
@@ -41,11 +41,11 @@ public class UserDbInit {
         Set<Role> set2 = new HashSet<>(1);
         set2.add(role2);
         Set<Role> set3 = new HashSet<>(1);
-        set2.add(role3);
+        set3.add(role3);
 
         User user1 = new User(1, "admin", "admin", 999,  "admin@email.com",  set1 );
         User user2 = new User(2, "test", "test", 20,  "test@email.com", set2 );
-        User user3 = new User(2, "user", "user", 20,  "test@email.com", set3 );
+        User user3 = new User(3, "user", "user", 20,  "user@email.com", set3 );
 
         userService.addUser(user1);
         userService.addUser(user2);

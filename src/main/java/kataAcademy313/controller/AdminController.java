@@ -46,13 +46,9 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user,@PathVariable("id") int id, int[] rolesID) {
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id, int[] rolesID) {
 
-        Set<Role> RoleList = new HashSet<>(rolesID.length);
-        for (int i : rolesID) {
-            RoleList.add(roleService.findById(i));
-        }
-        user.setRoles(RoleList);
+        user.setRoles(roleService.roleSetById(rolesID));
         userService.update(id, user);
 
         return "redirect:/admin";
@@ -61,11 +57,7 @@ public class AdminController {
     @PostMapping()
     public String create(@ModelAttribute("newUser") User user, int[] rolesID) {
 
-        Set<Role> RoleList = new HashSet<>(rolesID.length);
-        for (int i : rolesID) {
-            RoleList.add(roleService.findById(i));
-        }
-        user.setRoles(RoleList);
+        user.setRoles(roleService.roleSetById(rolesID));
         userService.addUser(user);
 
         return "redirect:/admin";

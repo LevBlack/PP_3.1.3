@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "person")
-public class User{
+public class User {
 
     @Id
     @Column(name = "id")
@@ -56,6 +56,7 @@ public class User{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
     public int getId() {
         return id;
     }
@@ -113,12 +114,14 @@ public class User{
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getEmail(), user.getEmail());
+        return Objects.equals(getUsername(), user.getUsername())
+                && Objects.equals(getEmail(), user.getEmail())
+                && Objects.equals(getPassword(), user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getEmail());
+        return Objects.hash(getUsername(), getEmail(), getPassword());
     }
 
 }

@@ -1,7 +1,6 @@
 package kataAcademy313.services;
 
 import kataAcademy313.models.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
