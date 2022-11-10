@@ -50,5 +50,6 @@ public class UserDbInit {
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
+
     }
 }
