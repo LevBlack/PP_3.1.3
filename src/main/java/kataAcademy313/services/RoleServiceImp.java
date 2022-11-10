@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class RoleServiceImp implements RoleService{
+public class RoleServiceImp implements RoleService {
 
     private final RoleRepositories roleRepositories;
 
@@ -24,13 +24,26 @@ public class RoleServiceImp implements RoleService{
     public Set<Role> getSetRole() {
         return new HashSet<>(roleRepositories.findAll());
     }
+
     @Override
     @Transactional
-    public void addRole(Role role){
+    public void addRole(Role role) {
         roleRepositories.save(role);
     }
+
     @Override
     public Role findById(int id) {
         return roleRepositories.findById(id).get();
+    }
+
+    @Override
+    public Set<Role> roleSetById(int[] rolesID) {
+        Set<Role> roleSet = new HashSet<>(rolesID.length);
+
+        for (int i : rolesID) {
+            roleSet.add(findById(i));
+        }
+
+        return roleSet;
     }
 }

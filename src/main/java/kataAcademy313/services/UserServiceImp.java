@@ -2,9 +2,7 @@ package kataAcademy313.services;
 
 import kataAcademy313.models.User;
 import kataAcademy313.repositories.UserRepositories;
-import kataAcademy313.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
 
     private final UserRepositories userRepositories;
 
@@ -48,7 +46,7 @@ public class UserServiceImp implements UserService{
     @Override
     @Transactional
     public void update(int id, User user) {
-        User userToUpdate = userRepositories.findById(id).orElseThrow( () -> new RuntimeException("User not found!"));
+        User userToUpdate = userRepositories.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
 
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setPassword(user.getPassword());
@@ -58,6 +56,7 @@ public class UserServiceImp implements UserService{
 
         userRepositories.save(userToUpdate);
     }
+
     @Override
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepositories.findByUsername(username);
