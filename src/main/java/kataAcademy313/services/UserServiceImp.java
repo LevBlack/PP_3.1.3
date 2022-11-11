@@ -4,6 +4,7 @@ import kataAcademy313.models.User;
 import kataAcademy313.repositories.UserRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class UserServiceImp implements UserService {
 
     private final UserRepositories userRepositories;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepositories userRepositories) {
+    public UserServiceImp(UserRepositories userRepositories, PasswordEncoder passwordEncoder) {
         this.userRepositories = userRepositories;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -28,6 +31,10 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void addUser(User user) {
+
+        String encodePass = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodePass);
+
         userRepositories.save(user);
     }
 
